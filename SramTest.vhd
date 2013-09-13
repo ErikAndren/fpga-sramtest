@@ -1,0 +1,24 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_arith.all;
+
+use work.Types.all;
+
+entity SramTest is 
+port (
+	Clk : in bit1;
+	ARst_N : in bit1;
+	--
+	Led0 : out bit1;
+	Led1 : out bit1;
+	Led2 : out bit1;
+	Led3 : out bit1
+);
+end entity SramTest;
+
+architecture rtl of SramTest is
+begin
+	
+
+end architecture;
+
