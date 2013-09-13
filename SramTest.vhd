@@ -7,12 +7,12 @@ use work.Types.all;
 entity SramTest is 
 port (
 	RootClk    : in bit1;
-	ARst_N : in bit1;
+	ARst_N     : in bit1;
 	--
-	Led0   : out bit1;
-	Led1   : out bit1;
-	Led2   : out bit1;
-	Led3   : out bit1
+	Led0       : out bit1;
+	Led1       : out bit1;
+	Led2       : out bit1;
+	Led3       : out bit1
 );
 end entity SramTest;
 
@@ -38,5 +38,9 @@ begin
       c0     => Clk,
       Locked => open
    );
+	
+	
+	
+	
 end architecture;
 
