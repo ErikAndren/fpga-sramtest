@@ -28,8 +28,6 @@ port (
         flash_sram_a18  : out   bit1;
         flash_sram_a19  : out   bit1;
         flash_sram_a20  : out   bit1;
-        flash_sram_a21  : out   bit1;
-        flash_sram_a22  : out   bit1;
         --
         flash_sram_dq0  : inout bit1;
         flash_sram_dq1  : inout bit1;
@@ -66,12 +64,12 @@ port (
         --
         sram_oe_n       : out   bit1;
         sram_ce1_n      : out   bit1;
-        sram_we_n       : out   bit1;
+        sram_we         : out   bit1;
         sram_be_n0      : out   bit1;
         sram_be_n1      : out   bit1;
         sram_be_n2      : out   bit1;
         sram_be_n3      : out   bit1;
-        sram_adsc_n     : out   bit1;
+        sram_adsc       : out   bit1;
         sram_clk        : out   bit1;
         --
         Led0            : out   bit1;
@@ -86,9 +84,10 @@ architecture rtl of SramTest is
   signal Clk         : bit1;
   signal Rst_N       : bit1;
   --
-  signal SramAddr    : word(21-1 downto 0);
+  signal SramAddr    : word(19-1 downto 0);
   signal SramDataOut : word(32-1 downto 0);
   signal SramWe      : bit1;
+  signal SramRe      : bit1;
   signal SramDataIn  : word(32-1 downto 0);
 begin
   RstSync : entity work.ResetSync
@@ -109,6 +108,10 @@ begin
       );
   
   SramControl : entity work.SramController
+    generic map (
+      AddrW => 19,
+      DataW => 32
+      )
     port map (
       Clk             => Clk,
       Rst_N           => Rst_N,
@@ -116,6 +119,7 @@ begin
       Addr            => SramAddr,
       D               => SramDataOut,
       We              => SramWe,
+      Re              => SramRe,
       Q               => SramDataIn,
       -- External interface
       flash_sram_a2   => flash_sram_a2,
@@ -137,8 +141,6 @@ begin
       flash_sram_a18  => flash_sram_a18,
       flash_sram_a19  => flash_sram_a19,
       flash_sram_a20  => flash_sram_a20,
-      flash_sram_a21  => flash_sram_a21,
-      flash_sram_a22  => flash_sram_a22,
       --
       flash_sram_dq0  => flash_sram_dq0,
       flash_sram_dq1  => flash_sram_dq1,
@@ -173,14 +175,14 @@ begin
       flash_sram_dq30 => flash_sram_dq30,
       flash_sram_dq31 => flash_sram_dq31,
       --
-      sram_oe_n       => sram_oe_n,
+      sram_oe         => sram_oe_n,
       sram_ce1_n      => sram_ce1_n,
-      sram_we_n       => sram_we_n,
+      sram_we         => sram_we,
       sram_be_n0      => sram_be_n0,
       sram_be_n1      => sram_be_n1,
       sram_be_n2      => sram_be_n2,
       sram_be_n3      => sram_be_n3,
-      sram_adsc_n     => sram_adsc_n,
+      sram_adsc       => sram_adsc,
       sram_clk        => sram_clk
       );
 end architecture;
