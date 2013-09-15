@@ -131,6 +131,7 @@ begin
       Data  => SramDataOut
       );
 		
+  -- Leds are active low
   Led0 <= SramDataIn(0);
   Led1 <= SramDataIn(1);
   Led2 <= SramDataIn(2);
