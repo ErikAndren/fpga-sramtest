@@ -76,8 +76,6 @@ set_location_assignment PIN_C9 -to flash_sram_a17
 set_location_assignment PIN_D9 -to flash_sram_a18
 set_location_assignment PIN_A7 -to flash_sram_a19
 set_location_assignment PIN_A6 -to flash_sram_a20
-set_location_assignment PIN_B18 -to flash_sram_a21
-set_location_assignment PIN_C17 -to flash_sram_a22
 set_location_assignment PIN_H3 -to flash_sram_dq0
 set_location_assignment PIN_D1 -to flash_sram_dq1
 set_location_assignment PIN_A8 -to flash_sram_dq2
