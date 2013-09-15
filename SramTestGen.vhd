@@ -1,6 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
+use ieee.std_logic_unsigned.all;
 
 use work.Types.all;
 
@@ -30,7 +31,6 @@ begin  -- rtl
       StartCnt_D <= conv_word(StartCnt, StartCnt_D'length);
     elsif Clk'event and Clk = '1' then  -- rising clock edge
       StartCnt_D <= StartCnt_N;
-
     end if;
   end process StimSync;
   
@@ -44,7 +44,7 @@ begin  -- rtl
     Data       <= (others => '0');
 
     if RedOr(StartCnt_D) = '1' then
-      StartCnt_D <= conv_word(conv_integer(StartCnt_D) - 1, StartCnt_D'length);
+		StartCnt_N <= StartCnt_D - 1;
     end if;
 
     -- Perform write
