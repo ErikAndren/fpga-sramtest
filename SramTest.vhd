@@ -72,6 +72,12 @@ port (
         sram_adsc       : out   bit1;
         sram_clk        : out   bit1;
         --
+        --
+        Btn0            : in    bit1;
+        Btn1            : in    bit1;
+        Btn2            : in    bit1;
+        Btn3            : in    bit1;
+        --
         Led0            : out   bit1;
         Led1            : out   bit1;
         Led2            : out   bit1;
@@ -80,15 +86,18 @@ port (
 end entity SramTest;
 
 architecture rtl of SramTest is
-  signal ARst        : bit1;
-  signal Clk         : bit1;
-  signal Rst_N       : bit1;
+  constant AddrW       : positive := 19;
+  constant DataW       : positive := 32;
   --
-  signal SramAddr    : word(19-1 downto 0);
-  signal SramDataOut : word(32-1 downto 0);
-  signal SramWe      : bit1;
-  signal SramRe      : bit1;
-  signal SramDataIn  : word(32-1 downto 0);
+  signal   ARst        : bit1;
+  signal   Clk         : bit1;
+  signal   Rst_N       : bit1;
+  --
+  signal   SramAddr    : word(AddrW-1 downto 0);
+  signal   SramDataOut : word(DataW-1 downto 0);
+  signal   SramWe      : bit1;
+  signal   SramRe      : bit1;
+  signal   SramDataIn  : word(DataW-1 downto 0);
 begin
   RstSync : entity work.ResetSync
     port map (
@@ -106,11 +115,31 @@ begin
       c0     => Clk,
       Locked => open
       );
+
+  StimGen : entity work.SramTestGen
+    generic map (
+      AddrW => AddrW,
+      DataW => DataW
+      )
+    port map (
+      Clk   => Clk,
+      Rst_N => Rst_N,
+      --
+      We    => SramWe,
+      Re    => SramRe,
+      Addr  => SramAddr,
+      Data  => SramDataOut
+      );
+		
+  Led0 <= SramDataIn(0);
+  Led1 <= SramDataIn(1);
+  Led2 <= SramDataIn(2);
+  Led3 <= SramDataIn(3);
   
   SramControl : entity work.SramController
     generic map (
-      AddrW => 19,
-      DataW => 32
+      AddrW => AddrW,
+      DataW => DataW
       )
     port map (
       Clk             => Clk,
