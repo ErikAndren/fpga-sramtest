@@ -112,14 +112,23 @@ set_location_assignment PIN_G6 -to flash_sram_dq30
 set_location_assignment PIN_C7 -to flash_sram_dq31
 set_location_assignment PIN_E9 -to sram_oe_n
 set_location_assignment PIN_F9 -to sram_ce1_n
-set_location_assignment PIN_G13 -to sram_we_n
+set_location_assignment PIN_G13 -to sram_we
 set_location_assignment PIN_F10 -to sram_be_n0
 set_location_assignment PIN_F11 -to sram_be_n1
 set_location_assignment PIN_F12 -to sram_be_n2
 set_location_assignment PIN_F13 -to sram_be_n3
-set_location_assignment PIN_F7 -to sram_adsc_n
+set_location_assignment PIN_F7 -to sram_adsc
 set_location_assignment PIN_A2 -to sram_clk
 
+set_location_assignment PIN_F1 -to Btn0
+set_location_assignment PIN_F2 -to Btn1
+set_location_assignment PIN_A10 -to Btn2
+set_location_assignment PIN_B10 -to Btn3
+
+set_location_assignment PIN_P13 -to Led0
+set_location_assignment PIN_P12 -to Led1
+set_location_assignment PIN_N12 -to Led2
+set_location_assignment PIN_N9 -to Led3
 
 set_global_assignment -name USE_CONFIGURATION_DEVICE OFF
 set_global_assignment -name CRC_ERROR_OPEN_DRAIN OFF
