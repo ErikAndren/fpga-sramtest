@@ -21,7 +21,7 @@ entity SramTestGen is
 end entity SramTestGen;
 
 architecture rtl of SramTestGen is
-  constant StartCnt   : positive := 25000000;
+  constant StartCnt               : positive := 25000000;
   signal   StartCnt_D, StartCnt_N : word(bits(StartCnt)-1 downto 0);
   
 begin  -- rtl
@@ -43,8 +43,8 @@ begin  -- rtl
     Addr       <= (others => '0');
     Data       <= (others => '0');
 
-    if RedOr(StartCnt_D) = '1' then
-		StartCnt_N <= StartCnt_D - 1;
+    if StartCnt_D > 0 then
+      StartCnt_N <= StartCnt_D - 1;
     end if;
 
     -- Perform write
@@ -56,8 +56,8 @@ begin  -- rtl
 
     -- Perform read
     if StartCnt_D = 1 then
-      Re <= '1';
+      Re   <= '1';
       Addr <= conv_word(0, Addr'length);
-    end if;    
+    end if;
   end process;
 end rtl;
