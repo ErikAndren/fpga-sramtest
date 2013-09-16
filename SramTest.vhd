@@ -111,9 +111,7 @@ begin
   ClkPll0 : entity work.ClkPll
     Port map (
       inclk0 => RootClk,
-      areset => ARst,
-      c0     => Clk,
-      Locked => open
+      c0     => Clk
       );
 
   StimGen : entity work.SramTestGen
