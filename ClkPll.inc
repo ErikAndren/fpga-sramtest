@@ -15,11 +15,9 @@
 
 FUNCTION ClkPll 
 (
-	areset,
 	inclk0
 )
 
 RETURNS (
-	c0,
-	locked
+	c0
 );
