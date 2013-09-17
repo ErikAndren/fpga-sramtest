@@ -79,6 +79,7 @@ entity SramController is
     sram_be_n1      : out   bit1;
     sram_be_n2      : out   bit1;
     sram_be_n3      : out   bit1;
+    -- Adsc controls address latching
     sram_adsc       : out   bit1;
     sram_clk        : out   bit1
     );
@@ -89,27 +90,26 @@ architecture rtl of SramController is
   signal sram_oe_n, sram_oe_d, sram_oe_d2 : bit1;
   signal sram_addr                        : word(AddrW-1 downto 0);
   signal sram_we_n, sram_we_d             : bit1;
-  signal sram_dq, sram_dq_d                        : word(DataW-1 downto 0);
+  signal sram_dq, sram_dq_d               : word(DataW-1 downto 0);
 begin  -- rtl
   SramClkFeed  : sram_clk  <= Clk;
   SramAddrFeed : sram_addr <= Addr(AddrW-1 downto 0);
   QFeed        : Q         <= sram_dq_d;
-
-  sram_adsc <= '1';
   
   CmdDec : process (We, Re)
   begin
-    assert (We and Re) = '0' report "Write enable and read enable are asserted at the same time. This is fatal" severity failure;
     sram_oe_n   <= '1';
     sram_ce1_n  <= '1';
     sram_we_n   <= '1';
     sram_be_n   <= '1';
+    sram_adsc <= '1';
 
     if (We = '1') then
-      sram_ce1_n  <= '0';
-      sram_we_n   <= '0';
-      sram_be_n   <= '0';
-      sram_oe_n   <= '1';
+      sram_ce1_n <= '0';
+      sram_we_n  <= '0';
+      sram_be_n  <= '0';
+      sram_oe_n  <= '1';
+      sram_adsc  <= '0';
     end if;
 
     if (Re = '1') then
@@ -117,6 +117,7 @@ begin  -- rtl
       sram_we_n  <= '1';
       sram_oe_n  <= '0';
       sram_be_n  <= '1';
+      sram_adsc  <= '0';
     end if;
   end process;
 
