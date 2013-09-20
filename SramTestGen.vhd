@@ -23,14 +23,16 @@ end entity SramTestGen;
 architecture rtl of SramTestGen is
   constant StartCnt               : positive := 50000000;
   signal   StartCnt_D, StartCnt_N : word(bits(StartCnt)-1 downto 0);
-  
+  signal   Data_D, Data_N         : word(4-1 downto 0);
 begin  -- rtl
   StimSync : process (Clk, Rst_N)
   begin  -- process Stim
     if Rst_N = '0' then                 -- asynchronous reset (active low)
       StartCnt_D <= conv_word(StartCnt, StartCnt_D'length);
+		Data_D     <= (others => '0');
     elsif Clk'event and Clk = '1' then  -- rising clock edge
       StartCnt_D <= StartCnt_N;
+		Data_D     <= Data_N;
     end if;
   end process StimSync;
   
@@ -42,6 +44,7 @@ begin  -- rtl
     Re         <= '0';
     Addr       <= (others => '0');
     Data       <= (others => '0');
+	 Data_N     <= Data_D;
 
     if StartCnt_D > 0 then
       StartCnt_N <= StartCnt_D - 1;
@@ -49,9 +52,10 @@ begin  -- rtl
 
     -- Perform write
     if StartCnt_D = 25000000 then
-      We   <= '1';
-      Addr <= conv_word(0, Addr'length);
-      Data <= conv_word(2, Data'length);
+      We     <= '1';
+      Addr   <= conv_word(0, Addr'length);
+      Data   <= xt0(Data_D, Data'length);
+		Data_N <= Data_D + 1;
     end if;
 
     -- Perform read
