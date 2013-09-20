@@ -53,16 +53,17 @@ begin  -- rtl
     -- Perform write
     if StartCnt_D = 25000000 then
       We     <= '1';
-      Addr   <= conv_word(0, Addr'length);
+      Addr   <= xt0(Data_D, Addr'length);
       Data   <= xt0(Data_D, Data'length);
-		Data_N <= Data_D + 1;
+
     end if;
 
     -- Perform read
     if StartCnt_D = 1 then
       Re   <= '1';
-      Addr <= conv_word(0, Addr'length);
+      Addr <= xt0(Data_D, Addr'length);
 		StartCnt_N <= conv_word(StartCnt, StartCnt_N'length);
+		Data_N <= Data_D + 1;
     end if;
   end process;
 end rtl;
