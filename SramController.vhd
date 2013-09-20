@@ -87,7 +87,7 @@ end entity SramController;
 
 architecture rtl of SramController is
   signal sram_be_n, sram_be_d             : bit1;
-  signal sram_oe_n, sram_oe_d, sram_oe_d2 : bit1;
+  signal sram_oe_n, sram_oe_d             : bit1;
   signal sram_addr                        : word(AddrW-1 downto 0);
   signal sram_we_n, sram_we_d             : bit1;
   signal sram_dq, sram_dq_d, sram_dq_rec  : word(DataW-1 downto 0);
@@ -127,12 +127,10 @@ begin  -- rtl
       sram_we_d   <= '1';
       sram_be_d   <= '1';
       sram_oe_d   <= '1';
-      sram_oe_d2  <= '1';
     elsif rising_edge(Clk) then
       sram_we_d   <= sram_we_n;
       sram_be_d   <= sram_be_n;
       sram_oe_d   <= sram_oe_n;
-      sram_oe_d2  <= sram_oe_d;	
 
       if sram_oe_d = '0' then
         sram_dq_rec <= sram_dq;
