@@ -90,11 +90,11 @@ architecture rtl of SramController is
   signal sram_oe_n, sram_oe_d, sram_oe_d2 : bit1;
   signal sram_addr                        : word(AddrW-1 downto 0);
   signal sram_we_n, sram_we_d             : bit1;
-  signal sram_dq, sram_dq_d               : word(DataW-1 downto 0);
+  signal sram_dq, sram_dq_d, sram_dq_rec  : word(DataW-1 downto 0);
 begin  -- rtl
   SramClkFeed  : sram_clk  <= Clk;
   SramAddrFeed : sram_addr <= Addr(AddrW-1 downto 0);
-  QFeed        : Q         <= sram_dq_d;
+  QFeed        : Q         <= sram_dq_rec;
   
   CmdDec : process (We, Re)
   begin
@@ -132,10 +132,10 @@ begin  -- rtl
       sram_we_d   <= sram_we_n;
       sram_be_d   <= sram_be_n;
       sram_oe_d   <= sram_oe_n;
-      sram_oe_d2  <= sram_oe_d;
+      sram_oe_d2  <= sram_oe_d;	
 
-      if sram_oe_d2 = '0' then
-        sram_dq_d <= sram_dq;
+      if sram_oe_d = '0' then
+        sram_dq_rec <= sram_dq;
       else
         sram_dq_d <= D;
       end if;

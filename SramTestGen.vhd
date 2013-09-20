@@ -17,11 +17,11 @@ entity SramTestGen is
     Re    : out bit1;
     Addr  : out word(AddrW-1 downto 0);
     Data  : out word(DataW-1 downto 0)
-    );
+		 );
 end entity SramTestGen;
 
 architecture rtl of SramTestGen is
-  constant StartCnt               : positive := 100;
+  constant StartCnt               : positive := 50000000;
   signal   StartCnt_D, StartCnt_N : word(bits(StartCnt)-1 downto 0);
   
 begin  -- rtl
@@ -48,7 +48,7 @@ begin  -- rtl
     end if;
 
     -- Perform write
-    if StartCnt_D = 10 then
+    if StartCnt_D = 25000000 then
       We   <= '1';
       Addr <= conv_word(0, Addr'length);
       Data <= conv_word(2, Data'length);
@@ -58,6 +58,7 @@ begin  -- rtl
     if StartCnt_D = 1 then
       Re   <= '1';
       Addr <= conv_word(0, Addr'length);
+		StartCnt_N <= conv_word(StartCnt, StartCnt_N'length);
     end if;
   end process;
 end rtl;

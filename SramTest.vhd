@@ -89,7 +89,6 @@ architecture rtl of SramTest is
   constant AddrW       : positive := 19;
   constant DataW       : positive := 32;
   --
-  signal   ARst        : bit1;
   signal   Clk         : bit1;
   signal   Rst_N       : bit1;
   --
@@ -106,8 +105,7 @@ begin
       --
       Rst_N    => Rst_N
       );
-  
-  ARst <= not ARst_N;
+ 
   ClkPll0 : entity work.ClkPll
     Port map (
       inclk0 => RootClk,
