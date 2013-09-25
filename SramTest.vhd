@@ -72,7 +72,6 @@ port (
         sram_adsc       : out   bit1;
         sram_clk        : out   bit1;
         --
-        --
         Btn0            : in    bit1;
         Btn1            : in    bit1;
         Btn2            : in    bit1;
@@ -121,6 +120,11 @@ begin
       Clk   => Clk,
       Rst_N => Rst_N,
       --
+		Btn0 => Btn0,
+		Btn1 => Btn1,
+		Btn2 => Btn2,
+		Btn3 => Btn3,
+		--
       We    => SramWe,
       Re    => SramRe,
       Addr  => SramAddr,
@@ -211,5 +215,8 @@ begin
       sram_adsc       => sram_adsc,
       sram_clk        => sram_clk
       );
+		
+		
+		
 end architecture;
 
